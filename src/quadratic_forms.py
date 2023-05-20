@@ -13,7 +13,7 @@ def diagonalize_form(A):
     if n != m:
         raise ValueError("A should be a square matrix")
 
-    identity_matrix = np.identity(n)
+    I = np.identity(n).tolist()
     
     for k in range(n):
         potential_pivots  = [abs(A[i][k]) for i in range(n)]
@@ -30,12 +30,14 @@ def diagonalize_form(A):
         for i in range(k+1, n):
             c = A[i][k] / A[k][k]
             for j in range(k+1, n):
-                A[i][j] = round(A[i][j] - c * A[k][j],2)
-                
+                A[i][j] = round(A[i][j] - c * A[k][j],2)    
             A[i][k] = 0
+
             for j in range(k+1, n):
                 A[j][i] = round(A[j][i] - c * A[j][k], 2)
-            
             A[k][i] = 0 
-    
-    return (A, identity_matrix)
+            
+            for j in range(k, n):
+                I[j][i] = round(I[j][i] - c * I[j][k], 2)
+            
+    return (A, I)
