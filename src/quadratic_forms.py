@@ -17,13 +17,6 @@ def diagonalize_form(A):
     
     for k in range(n):
         potential_pivots  = [abs(A[i][k]) for i in range(n)]
-        if max(potential_pivots) != A[k][k]:
-            i_max = potential_pivots.index(max(potential_pivots)) + k
-        
-            A[k], A[i_max] = A[i_max], A[k]
-            A = np.transpose(np.array(A)).tolist()
-            A[k], A[i_max] = A[i_max], A[k]
-
 
         A = np.transpose(np.array(A)).tolist()
         
