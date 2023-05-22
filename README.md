@@ -3,3 +3,4 @@ Linra (LINear algebRA library) is a library where you can find implementations o
 TODO:
 1. Diagonalization of the quadratic form's matrices.
 2. Solving a system of linear equations over Z\_p.
+3. Gram-Schmidt ortogonalization with a *given* dot product.
