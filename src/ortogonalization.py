@@ -1,4 +1,5 @@
-import matrix
+from matrix import Matrix
+import math
 
 class Ortogonalization:
     """
@@ -7,6 +8,9 @@ class Ortogonalization:
     """
     @staticmethod
     def _default_dot_product(x, y):
+        print(x, y)
+        x = x if type(x)==list else x.matrix
+        y = y if type(y)==list else y.matrix
         if (len(x) != len(y)):
             raise ValueError("Vectors should be of the same size.")
         
@@ -14,7 +18,7 @@ class Ortogonalization:
 
         product = 0
         for i in range(n):
-            result += x[i]*y[i]
+            product += x[i]*y[i]
 
         return product
 
@@ -23,7 +27,14 @@ class Ortogonalization:
         'vectors' is a required parameter of list type.
     """
     @staticmethod
-    def gram_schmidt(vectors, dot_product=_default_dot_product()):
-        for i in range(len(vectors))
-            y = vectors
-            #TODO
+    def gram_schmidt(vectors, dot_product=_default_dot_product):
+        z = []
+        for i in range(len(vectors)):
+            t = Matrix([0 for i in range(len(vectors[0]))])
+            for j in range(i):
+                t += dot_product(vectors[i], z[j])*z[j]
+            y = Matrix(vectors[i]) - t
+            norm_y = math.sqrt(dot_product(y, y))
+            z_i = y/norm_y
+            z.append(z_i)
+        return z
