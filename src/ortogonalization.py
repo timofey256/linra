@@ -28,17 +28,14 @@ class Ortogonalization:
     @staticmethod
     def gram_schmidt(vectors, dot_product=_default_dot_product):
         z = []
-        print("vectors: ", vectors)
         for i in range(len(vectors)):
             t = Matrix([0 for i in range(len(vectors[0]))])
             j=0
             while j<i:
-                print(dot_product(vectors[i], z[j]))
-                t += dot_product(vectors[i], z[j])*z[j]
+                t += z[j]*dot_product(vectors[i], z[j])
                 j += 1
             y_i = Matrix(vectors[i]) - t
             norm_y = math.sqrt(dot_product(y_i, y_i))
             z_i = y_i/norm_y
-            print(f"i: {i}, t: {t} y: {y_i}, z_i: {z_i}")
-            z.append(Matrix(z_i))
+            z.append(z_i)
         return z
