@@ -8,7 +8,6 @@ class Ortogonalization:
     """
     @staticmethod
     def _default_dot_product(x, y):
-        print(x, y)
         x = x if type(x)==list else x.matrix
         y = y if type(y)==list else y.matrix
         if (len(x) != len(y)):
@@ -29,12 +28,17 @@ class Ortogonalization:
     @staticmethod
     def gram_schmidt(vectors, dot_product=_default_dot_product):
         z = []
+        print("vectors: ", vectors)
         for i in range(len(vectors)):
             t = Matrix([0 for i in range(len(vectors[0]))])
-            for j in range(i):
+            j=0
+            while j<i:
+                print(dot_product(vectors[i], z[j]))
                 t += dot_product(vectors[i], z[j])*z[j]
-            y = Matrix(vectors[i]) - t
-            norm_y = math.sqrt(dot_product(y, y))
-            z_i = y/norm_y
-            z.append(z_i)
+                j += 1
+            y_i = Matrix(vectors[i]) - t
+            norm_y = math.sqrt(dot_product(y_i, y_i))
+            z_i = y_i/norm_y
+            print(f"i: {i}, t: {t} y: {y_i}, z_i: {z_i}")
+            z.append(Matrix(z_i))
         return z
