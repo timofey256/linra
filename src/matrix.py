@@ -39,24 +39,29 @@ class Matrix:
         return Matrix(res)
     
     def __mul__(self, a):
+        result = self.matrix.copy()
         # a is a scalar
         if type(a) == int or type(a) == float:
             for i in range(self.rows):
                 for j in range(self.col):
-                    self.matrix[i][j] *= a
+                    result[i][j] *= a
         else:
             #TODO
             pass
+        return result
+
     def __truediv__(self, a):
+        result = self.matrix.copy()
         if type(a) == int or type(a) == float:
             for i in range(self.rows):
                 for j in range(self.col):
                     if self.col != 1:
-                        self.matrix[i][j] /= a
+                        result[i][j] /= a
                     else:
-                        self.matrix[i] /= a
+                        result[i] /= a
         else:
             raise ValueError("You can't divide a matrix by anything but scalar.")
-    
+        return result
+
     def __repr__(self):
         return str(self.matrix)
