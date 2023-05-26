@@ -10,6 +10,9 @@ class Matrix:
         self.col = col
         self.matrix = arr
 
+    def __eq__(self, other):
+        return self.matrix == other.matrix
+
     def __sub__(self, other):
         if (self.rows != other.rows or self.col != other.col):
             raise ValueError("Matrices should be of the same size to perform subtraction.")
