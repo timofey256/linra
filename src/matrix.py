@@ -1,14 +1,13 @@
 class Matrix:
     def __init__(self, arr):
-        rows = len(arr)
-        col = len(arr[0]) if type(arr[0])==type(list) else 1
-       
-        if (rows <= 0 or col <= 0):
-            raise ValueError("Dimensions of the matrix should be greater than 0.");
-
-        self.rows = rows
-        self.col = col
+        self.rows = len(arr)
+        self.col = len(arr[0]) if type(arr[0])==list else 1
         self.matrix = arr
+        
+        if (self.rows <= 0 or self.col <= 0):
+            raise ValueError("Dimensions of the matrix should be greater than 0.");
+        
+
 
     def __eq__(self, other):
         return self.matrix == other.matrix
@@ -33,13 +32,13 @@ class Matrix:
         if (self.rows != other.rows or self.col != other.col):
             raise ValueError("Matrices should be of the same size to perform subtraction.")
     
-        res = [0 for i in range(self.rows)] if (self.col == 1) else [self.rows*[0 for i in range(self.col)]]
+        res = []
+        for k in range(self.rows):
+            res.append([0 for i in range(self.col)])
+        
         for i in range(self.rows):
-            if (self.col != 1):
-                for j in range(self.col):
-                    res[i][j] = self.matrix[i][j] + other.matrix[i][j]
-            else:
-                res[i] = self.matrix[i] + other.matrix[i] 
+            for j in range(self.col):
+                res[i][j] = self.matrix[i][j] + other.matrix[i][j]
 
         return Matrix(res)
     
