@@ -4,6 +4,8 @@ import sys
 sys.path.append('../linra')
 
 from src.matrix import Matrix
+from src.diagonalization import Diagonalization
+from src.ortogonalization import Ortogonalization
 import unittest
 
 from operator import add, sub, mul
@@ -13,9 +15,11 @@ class TestData:
     b = Matrix([[5, 9, 7], [-8, 4, 9], [10, 4, 3]])
     c = Matrix([[2,2], [4,1]])
 
+    w = Matrix([[1,2,-1], [2,5,-3], [-1,-3,2]])
+    v = Matrix([[1,0,1,0], [1,1,1,1], [1,0,0,1]])
 
 class TestMatrix(unittest.TestCase):
-    def runTestExceptionRaisingTemplate(self, op, data1=TestData.a, data2=TestData.c, exceptionType=ValueError):
+    def runTestExceptionRaisingTemplate(self, op, data1=TestData.b, data2=TestData.c, exceptionType=ValueError):
         with self.assertRaises(exceptionType):
             op(data1, data2)
     
@@ -36,6 +40,19 @@ class TestMatrix(unittest.TestCase):
         self.assertEqual((TestData.a*TestData.b), res)
 
         self.runTestExceptionRaisingTemplate(mul)
+
+class TestDiagonalization(unittest.TestCase):
+    def testFormDiagonalization(self):
+        res_form = Matrix([[1,0,0], [0,1,0], [0,0,0]])
+        res_transition_matrix = Matrix([[1,-2,-1], [0,1,1],[0,0,1]])
+
+        self.assertEqual(Diagonalization.diagonalize_form(TestData.w), (res_form, res_transition_matrix))
+
+class TestOrtogonalization(unittest.TestCase):
+    def testGramSchmidtOrtogonalization(self):
+        res = Matrix([[-0.6635, -0.3035, -0.4835, -0.4835], [0, 0, -0.7071, 0.7071], [0.5565, -0.8111, -0.1273, -0.1273]])
+
+        self.assertEqual(Ortogonalization.gram_schmidt(TestData.v), res)
 
 if __name__ == "__main__":
     unittest.main()
