@@ -10,6 +10,7 @@ class Diagonalization:
 
         A should be a symetric matrix.
     """
+    @staticmethod
     def diagonalize_form(A):
         n, m = np.array(A).shape
         if n != m:
