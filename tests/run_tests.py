@@ -41,6 +41,13 @@ class TestMatrix(unittest.TestCase):
 
         self.runTestExceptionRaisingTemplate(mul)
 
+    def test_transpose(self):
+        res1 = Matrix([[2, 4], [2, 1]]) # Transpose of TestData.c
+        res2 = Matrix([[1, 2, -1], [2, 5, -3], [-1, -3, 2]]) # Transpose of TestData.w
+
+        self.assertEqual(TestData.c.transpose(), res1)
+        self.assertEqual(TestData.w.transpose(), res2)
+
 class TestDiagonalization(unittest.TestCase):
     def testFormDiagonalization(self):
         res_form = Matrix([[1,0,0], [0,1,0], [0,0,0]])

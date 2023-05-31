@@ -82,8 +82,16 @@ class Matrix:
     def __repr__(self):
         return str(self.matrix)
 
+    def transpose(self):
+        matrix = self.matrix.copy()
+        for i in range(self.rows):
+            for j in range(i, self.col):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        
+        return Matrix(matrix)
+
     def _validate_matrix(self, matrix):
         if (type(matrix) != Matrix):
             raise TypeError(f"You can add only Matrix and Matrix. Given argument is {type(matrix)} type.")
         if (self.rows != matrix.rows or self.col != matrix.col):
-            raise ValueError("Matrices should be of the same size to perform addition.")
+            raise ValueError("Matrices should be of the same size to perform addition.")        
