@@ -48,6 +48,13 @@ class TestMatrix(unittest.TestCase):
         self.assertEqual(TestData.c.transpose(), res1)
         self.assertEqual(TestData.w.transpose(), res2)
 
+    def test_standard_matrices(self):
+        res1 = Matrix([[1,0,0], [0,1,0], [0,0,1]])
+        res2 = Matrix([[0,0,0], [0,0,0], [0,0,0]])
+
+        self.assertEqual(Matrix.create_unit_matrix(3,3), res1)
+        self.assertEqual(Matrix.create_zero_matrix(3,3), res2)
+
 class TestDiagonalization(unittest.TestCase):
     def testFormDiagonalization(self):
         res_form = Matrix([[1,0,0], [0,1,0], [0,0,0]])

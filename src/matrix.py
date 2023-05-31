@@ -13,6 +13,13 @@ class Matrix:
         for i in range(rows_number):
             arr.append(cols_number*[0])
         return Matrix(arr)
+    
+    @staticmethod
+    def create_unit_matrix(rows_number, cols_number):
+        m = Matrix.create_zero_matrix(rows_number, cols_number)
+        for i in range(rows_number):
+            m.matrix[i][i] = 1
+        return m
 
     def __eq__(self, other):
         return self.matrix == other.matrix
