@@ -2,11 +2,11 @@ class Matrix:
     def __init__(self, arr):
         self.rows = len(arr)
         self.col = len(arr[0]) if type(arr[0])==list else 1
-        self.matrix = arr
+        self._data = arr if type(arr[0]) == list else [arr] # if vector is given
         
         if (self.rows <= 0 or self.col <= 0):
             raise ValueError("Dimensions of the matrix should be greater than 0.");
-        
+
     @staticmethod
     def create_zero_matrix(rows_number, cols_number):
         arr = []
@@ -18,11 +18,11 @@ class Matrix:
     def create_unit_matrix(rows_number, cols_number):
         m = Matrix.create_zero_matrix(rows_number, cols_number)
         for i in range(rows_number):
-            m.matrix[i][i] = 1
+            m._data[i][i] = 1
         return m
 
     def __eq__(self, other):
-        return self.matrix == other.matrix
+        return self._data == other._data
 
     def __sub__(self, other):
         self._validate_matrix(other)
@@ -30,10 +30,9 @@ class Matrix:
         res = []
         for k in range(self.rows):
             res.append([0 for i in range(self.col)])
-        
-        for i in range(self.rows):
-            for j in range(self.col):
-                res[i][j] = self.matrix[i][j] - other.matrix[i][j]
+        for i in range(self.col):
+            for j in range(self.rows):
+                res[i][j] = self._data[i][j] - other._data[i][j]
 
         return Matrix(res)
 
@@ -45,7 +44,7 @@ class Matrix:
         
         for i in range(self.rows):
             for j in range(self.col):
-                res[i][j] = self.matrix[i][j] + other.matrix[i][j]
+                res[i][j] = self._data[i][j] + other._data[i][j]
 
         return Matrix(res)
     
@@ -53,7 +52,7 @@ class Matrix:
         result = None
         # a is a scalar
         if type(other) == int or type(other) == float:
-            result = self.matrix.copy()
+            result = self._data.copy()
             for i in range(self.rows):
                 for j in range(self.col):
                     if (self.col != 1):
@@ -64,17 +63,17 @@ class Matrix:
         elif type(other)==Matrix:
             self._validate_matrix(other)
 
-            result = Matrix.create_zero_matrix(self.rows, self.col).matrix
+            result = Matrix.create_zero_matrix(self.rows, self.col)._data
             for i in range(self.rows):
                 for j in range(other.col):
                     element = 0
                     for k in range(self.col):
-                        element += self.matrix[i][k]*other.matrix[k][j]
+                        element += self._data[i][k]*other._data[k][j]
                     result[i][j] = element
         return Matrix(result)
 
     def __truediv__(self, a):
-        result = self.matrix.copy()
+        result = self._data.copy()
         if type(a) == int or type(a) == float:
             for i in range(self.rows):
                 for j in range(self.col):
@@ -87,10 +86,10 @@ class Matrix:
         return Matrix(result)
 
     def __repr__(self):
-        return str(self.matrix)
+        return str(self._data)
 
     def transpose(self):
-        matrix = self.matrix.copy()
+        matrix = self._data.copy()
         for i in range(self.rows):
             for j in range(i, self.col):
                 matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]

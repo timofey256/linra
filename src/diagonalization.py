@@ -25,21 +25,21 @@ class Diagonalization:
             A = A.transpose()
 
             for i in range(k+1, n):
-                c = A.matrix[i][k] / A.matrix[k][k]
+                c = A._data[i][k] / A._data[k][k]
                 
                 # Substitute rows of A
                 for j in range(k+1, n):
-                    A.matrix[i][j] = Diagonalization._round_number(A.matrix[i][j] - c * A.matrix[k][j])
-                A.matrix[i][k] = 0
+                    A._data[i][j] = Diagonalization._round_number(A._data[i][j] - c * A._data[k][j])
+                A._data[i][k] = 0
 
                 # Substitute columns of A
                 for j in range(k+1, n):
-                    A.matrix[j][i] = Diagonalization._round_number(A.matrix[j][i] - c * A.matrix[j][k])
-                A.matrix[k][i] = 0 
+                    A._data[j][i] = Diagonalization._round_number(A._data[j][i] - c * A._data[j][k])
+                A._data[k][i] = 0 
 
                 # Substitute columns of I
                 for j in range(n):   
-                    I.matrix[j][i] = Diagonalization._round_number(I.matrix[j][i] - c * I.matrix[j][k])
+                    I._data[j][i] = Diagonalization._round_number(I._data[j][i] - c * I._data[j][k])
                 
         return (A, I)
 
