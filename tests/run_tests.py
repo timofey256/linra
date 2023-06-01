@@ -21,6 +21,8 @@ class TestData:
 
     vectorW = Vector([2, 3, 5])
     vectorV = Vector([-2, 5, 9])
+    vectorA = Vector([123123, -35231, 123])
+    vectorB = Vector([-2434, 14, 12415])
 
 class TestMatrix(unittest.TestCase):
     def runTestExceptionRaisingTemplate(self, op, data1=TestData.b, data2=TestData.c, exceptionType=ValueError):
@@ -73,10 +75,23 @@ class TestDiagonalization(unittest.TestCase):
 #         self.assertEqual(Ortogonalization.gram_schmidt(TestData.v), res)
 
 class TestVector(unittest.TestCase):
+    def testGeneral(self):
+        with self.assertRaises(TypeError):
+            TestData.vectorV + TestData.v
+            TestData.v + TestData.vectorV
+            TestData.vectorV + "asd"
+
     def testAddition(self):
         res = Vector([0, 8, 14])
-
         self.assertEqual(TestData.vectorV + TestData.vectorW, res)
+        self.assertEqual(TestData.vectorW + TestData.vectorV, res)
+        self.assertEqual(TestData.vectorA + TestData.vectorB, Vector([120689, -35217, 12538]))
+
+    def testSubstitution(self):
+        res = Vector([4, -2 ,-4])
+        res_negation = Vector(list(map(lambda x: -x, res._data)))
+        self.assertEqual(TestData.vectorW - TestData.vectorV, res)
+        self.assertEqual(TestData.vectorV - TestData.vectorW, res_negation)
 
 if __name__ == "__main__":
     unittest.main()
