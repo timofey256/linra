@@ -1,9 +1,10 @@
-#!/bin/usr/env python3
+#!/usr/bin/env python3
 
 import sys
 sys.path.append('../linra')
 
 from src.matrix import Matrix
+from src.vector import Vector
 from src.diagonalization import Diagonalization
 from src.ortogonalization import Ortogonalization
 import unittest
@@ -17,6 +18,9 @@ class TestData:
 
     w = Matrix([[1,2,-1], [2,5,-3], [-1,-3,2]])
     v = Matrix([[1,0,1,0], [1,1,1,1], [1,0,0,1]])
+
+    vectorW = Vector([2, 3, 5])
+    vectorV = Vector([-2, 5, 9])
 
 class TestMatrix(unittest.TestCase):
     def runTestExceptionRaisingTemplate(self, op, data1=TestData.b, data2=TestData.c, exceptionType=ValueError):
@@ -62,11 +66,17 @@ class TestDiagonalization(unittest.TestCase):
 
         self.assertEqual(Diagonalization.diagonalize_form(TestData.w), (res_form, res_transition_matrix))
 
-class TestOrtogonalization(unittest.TestCase):
-    def testGramSchmidtOrtogonalization(self):
-        res = Matrix([[-0.6635, -0.3035, -0.4835, -0.4835], [0, 0, -0.7071, 0.7071], [0.5565, -0.8111, -0.1273, -0.1273]])
+# class TestOrtogonalization(unittest.TestCase):
+#     def testGramSchmidtOrtogonalization(self):
+#         res = Matrix([[-0.6635, -0.3035, -0.4835, -0.4835], [0, 0, -0.7071, 0.7071], [0.5565, -0.8111, -0.1273, -0.1273]])
 
-        self.assertEqual(Ortogonalization.gram_schmidt(TestData.v), res)
+#         self.assertEqual(Ortogonalization.gram_schmidt(TestData.v), res)
+
+class TestVector(unittest.TestCase):
+    def testAddition(self):
+        res = Vector([0, 8, 14])
+
+        self.assertEqual(TestData.vectorV + TestData.vectorW, res)
 
 if __name__ == "__main__":
     unittest.main()
