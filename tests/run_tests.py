@@ -11,6 +11,21 @@ import unittest
 
 from operator import add, sub, mul
 
+def is_almost_equal_lists(first, second, places=7):
+    if type(first) != list or type(second) != list:
+        raise TypeError(f"Both elements should be of list type. Given elements are {type(first)} and {type(second)} types.")
+    elif len(first) != len(second):
+        raise ValueError("Both lists should have the same size.")
+    
+    allowed_diff = pow(0.1, places)
+    for i in range(len(first)):
+        diff = first[i]-second[i]
+        
+        if abs(diff) > abs(allowed_diff):
+            return False
+
+    return True
+
 class TestData:
     a = Matrix([[1, 2, 3], [10, -12, 7], [0, 2, -4]])
     b = Matrix([[5, 9, 7], [-8, 4, 9], [10, 4, 3]])
@@ -68,14 +83,16 @@ class TestDiagonalization(unittest.TestCase):
 
         self.assertEqual(Diagonalization.diagonalize_form(TestData.w), (res_form, res_transition_matrix))
 
-# class TestOrtogonalization(unittest.TestCase):
-#     def testGramSchmidtOrtogonalization(self):
-#         res = Matrix([[-0.6635, -0.3035, -0.4835, -0.4835], [0, 0, -0.7071, 0.7071], [0.5565, -0.8111, -0.1273, -0.1273]])
+class TestOrtogonalization(unittest.TestCase):
+    def testGramSchmidtOrtogonalization(self):
+        correct_res = [[0.7071, 0, 0.7071, 0], [0, 0.7071, 0, 0.7071], [0.5, -0.5, -0.5, 0.5]]
 
-#         self.assertEqual(Ortogonalization.gram_schmidt(TestData.v), res)
+        actual_res = Ortogonalization.gram_schmidt(TestData.v._data)
+        for i in range(len(correct_res)):
+            self.assertTrue(is_almost_equal_lists(actual_res[i], correct_res[i], places=4))
 
 class TestVector(unittest.TestCase):
-    def testGeneral(self):
+    def testExceptions(self):
         with self.assertRaises(TypeError):
             TestData.vectorV + TestData.v
             TestData.v + TestData.vectorV
