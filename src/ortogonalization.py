@@ -1,4 +1,5 @@
 from .matrix import Matrix
+from .vector import Vector
 import math
 
 class Ortogonalization:
@@ -28,17 +29,15 @@ class Ortogonalization:
     @staticmethod
     def gram_schmidt(vectors, dot_product=_default_dot_product):
         z = []
-        if type(vectors) == Matrix:
-            vectors = vectors._data
 
         for i in range(len(vectors)):
-            t = Matrix([0 for i in range(len(vectors[0]))])
+            t = Vector([0 for i in range(len(vectors[0]))])
             j=0
             while j<i:
-                t += z[j]*dot_product(vectors[i], z[j])
+                t += Vector(z[j].copy())*dot_product(vectors[i], z[j])
                 j += 1
-            y_i = Matrix(vectors[i]) - t
+            y_i = Vector(vectors[i]) - t
             norm_y = math.sqrt(dot_product(y_i, y_i))
             z_i = y_i/norm_y
-            z.append(z_i)
+            z.append(z_i._data)
         return z
