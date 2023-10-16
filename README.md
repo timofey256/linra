@@ -1,7 +1,1 @@
-Linra (LINear algebRA library) is a library with no dependencies where you can find implementations of some not-so-popular operations of the subject. I'm just tired of that endless hand computation :/. 
-
-TODO:
-1. Diagonalization of the quadratic form's matrices.
-2. Solving a system of linear equations over Z\_p.
-3. Gram-Schmidt ortogonalization with a *given* dot product.
-4. Finding ortogonal vector spaces to the given spaces.
+Linra (LINear algebRA library) is a small library with no dependencies where you can find implementations of some not-so-popular operations of the subject. I was just tired of that endless hand computation :/. It has matrices conversion to (R)REF, diagonalized form and diagonalization of given vectors.
